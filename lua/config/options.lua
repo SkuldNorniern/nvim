@@ -42,7 +42,7 @@ opt.numberwidth = 3
 
 opt.scrolloff = 27
 opt.sidescrolloff = 9
-opt.smoothscroll = true
+-- opt.smoothscroll = true
 
 
 opt.cursorline = true

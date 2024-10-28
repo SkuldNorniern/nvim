@@ -8,3 +8,7 @@ require("config.keymaps")
 
 
 require("config.lazy")
+
+
+-- colorscheme to rose-pine
+vim.cmd.colorscheme("rose-pine-moon")

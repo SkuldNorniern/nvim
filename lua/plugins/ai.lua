@@ -7,6 +7,7 @@ return {
         opts = {
             -- add any opts here
             provider= "openai",
+            auto_suggestions_provider = "openai",
             openai = {
                 -- ["local"] = true,
                 endpoint = "https://llm.nornity.com/v1-openai",
@@ -16,14 +17,36 @@ return {
             },
             vendors = {
                 ["nornity"] = {
-                    -- ["local"] = true,
+                    ["local"] = true,
                     endpoint = "https://llm.nornity.com/v1-openai",
-                    model = "gpt-3.5",
+                    model = "nemo",
                     api_key_name = "OPENAI_API_KEY",
-                    max_tokens = 4096,
+                    parse_curl_args = function(opts, code_opts)
+                        return {
+                            url = opts.endpoint .. "/chat/completions",
+                            headers = {
+                                ["Accept"] = "application/json",
+                                ["Content-Type"] = "application/json",
+                                ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
+                            },
+                            body = {
+                                model = opts.model,
+                                messages = { -- you can make your own message, but this is very advanced
+                                    { role = "system", content = code_opts.system_prompt },
+                                    { role = "user", content = require("avante.providers.openai").get_user_message(code_opts) },
+                                },
+                                temperature = 0,
+                                max_tokens = 4096,
+                                stream = true,
+                            },
+                        }
+                    end,
+                    parse_response_data = function(data_stream, event_state, opts)
+                        require("avante.providers").openai.parse_response(data_stream, event_state, opts)
+                    end,
                 },
             },
-            auto_suggestions_provider = "nornity",
+            
             behaviour = {
                 auto_suggestions = true,
                 auto_set_highlight_group = true,

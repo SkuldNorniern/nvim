@@ -15,3 +15,5 @@ map("n", "<leader>w", "<Cmd>w<CR>", { desc = "Save" })
 map("n", "<leader>W", "<Cmd>wa<CR>", { desc = "Save All" })
 map("n", "<leader>x", "<Cmd>x<CR>", { desc = "Save & Quit" })
 map("n", "<leader>X", "<Cmd>x!<CR>", { desc = "Force Save & Quit" })
+
+map("n", "<Leader>p", "<Cmd>Precognition toggle<CR>", { desc = "Toggle Precognition" })

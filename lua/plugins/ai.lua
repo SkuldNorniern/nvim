@@ -11,6 +11,7 @@ return {
             openai = {
                 -- ["local"] = true,
                 endpoint = "https://llm.nornity.com/v1-openai",
+                api_key_name = "OPENAI_API_KEY",
                 model = "nemo",
                 temperature = 0,
                 max_tokens = 4096,

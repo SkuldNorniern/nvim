@@ -6,5 +6,15 @@ return {
             vim.notify = require("notify")
         end,
     },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+        },
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
+    }
 }
 

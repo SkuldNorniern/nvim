@@ -146,6 +146,6 @@ return {
             -- disabled_fts = {
             --     "startify",
             -- },
-        }
+        },
     }
 }

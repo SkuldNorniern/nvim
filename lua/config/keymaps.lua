@@ -5,6 +5,8 @@ map({"n", "x", "o"}, "/", "/\\v", { desc = "Regex Search" })
 map({"n", "x", "o"}, "?", "?\\v", { desc = "Reverse Regex Search" })
 map({"n", "x", "o"}, "g/", "/\\v", { desc = "Regex Search" })
 map({"n", "x", "o"}, "g?", "?\\v", { desc = "Reverse Regex Search" })
+map({"n","x"}, "]d", vim.diagnostic.goto_next, {desc = "Next Diagnostic" })
+map({"n","x"}, "[d", vim.diagnostic.goto_prev, {desc = "Prev Diagnostic" })
 
 map("n", "-", "<Cmd>edit %:h<CR>", { desc = "Explorer Parent Dir" })
 map("n", "_", "<Cmd>edit .<CR>", { desc = "Explorer CWD" })

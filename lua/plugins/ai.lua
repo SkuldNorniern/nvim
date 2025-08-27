@@ -1,71 +1,40 @@
 return {
     {
         "yetone/avante.nvim",
+        -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+        -- ⚠️ must add this setting! ! !
+        build = vim.fn.has("win32") ~= 0
+        and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+        or "make",
         event = "VeryLazy",
-        lazy = false,
-        version = false, -- set this if you want to always pull the latest change
+        version = false, -- Never set this value to "*"! Never!
+        ---@module 'avante'
+        ---@type avante.Config
         opts = {
             -- add any opts here
-            provider= "openai",
-            auto_suggestions_provider = "openai",
-            openai = {
-                -- ["local"] = true,
-                endpoint = "https://llm.nornity.com/v1-openai",
-                api_key_name = "OPENAI_API_KEY",
-                model = "nemo",
-                temperature = 0,
-                max_tokens = 4096,
-            },
-            vendors = {
-                ["nornity"] = {
-                    ["local"] = true,
-                    endpoint = "https://llm.nornity.com/v1-openai",
-                    model = "nemo",
-                    api_key_name = "OPENAI_API_KEY",
-                    parse_curl_args = function(opts, code_opts)
-                        return {
-                            url = opts.endpoint .. "/chat/completions",
-                            headers = {
-                                ["Accept"] = "application/json",
-                                ["Content-Type"] = "application/json",
-                                ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-                            },
-                            body = {
-                                model = opts.model,
-                                messages = { -- you can make your own message, but this is very advanced
-                                    { role = "system", content = code_opts.system_prompt },
-                                    { role = "user", content = require("avante.providers.openai").get_user_message(code_opts) },
-                                },
-                                temperature = 0,
-                                max_tokens = 4096,
-                                stream = true,
-                            },
-                        }
-                    end,
-                    parse_response_data = function(data_stream, event_state, opts)
-                        require("avante.providers").openai.parse_response(data_stream, event_state, opts)
-                    end,
+            -- this file can contain specific instructions for your project
+            instructions_file = "avante.md",
+            -- for example
+            provider = "ollama",
+            providers = {
+                ollama = {
+                    endpoint = "http://aurolace:11434", -- Note that there is no /v1 at the end.
+                    model = "deepseek-r1:14b",
                 },
             },
-            
-            behaviour = {
-                auto_suggestions = true,
-                auto_set_highlight_group = true,
-                auto_set_keymaps = true,
-                auto_apply_diff_after_generation = false,
-                support_paste_from_clipboard = false,
-            },
         },
-        -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-        build = "make",
-        -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
         dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "stevearc/dressing.nvim",
             "nvim-lua/plenary.nvim",
             "MunifTanjim/nui.nvim",
             --- The below dependencies are optional,
+            "echasnovski/mini.pick", -- for file_selector provider mini.pick
+            "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+            "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+            "ibhagwan/fzf-lua", -- for file_selector provider fzf
+            "stevearc/dressing.nvim", -- for input provider dressing
+            "folke/snacks.nvim", -- for input provider snacks
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+            "zbirenbaum/copilot.lua", -- for providers='copilot'
             {
                 -- support for image pasting
                 "HakonHarnes/img-clip.nvim",
@@ -83,14 +52,14 @@ return {
                     },
                 },
             },
+            {
+                -- Make sure to set this up properly if you have lazy=true
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { "markdown", "Avante" },
+                },
+                ft = { "markdown", "Avante" },
+            },
         },
-    },
-    {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-            file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-    },
+    }
 }

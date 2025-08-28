@@ -37,4 +37,10 @@ return {
         event = "BufReadPre",
         opts = {},
     },
+    {
+        "max397574/care.nvim",
+        config = function()
+            -- Set up mappings here
+        end
+    }
 }

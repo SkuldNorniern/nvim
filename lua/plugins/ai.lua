@@ -19,7 +19,7 @@ return {
             providers = {
                 ollama = {
                     endpoint = "http://aurolace:11434", -- Note that there is no /v1 at the end.
-                    model = "deepseek-r1:14b",
+                    model = "deepseek-r1:1.5b",
                 },
             },
         },

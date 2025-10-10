@@ -42,5 +42,8 @@ return {
         config = function()
             require("glow").setup()
         end
+    },
+    {
+        { 'wakatime/vim-wakatime', lazy = false }
     }
 }

@@ -15,11 +15,13 @@ return {
             -- this file can contain specific instructions for your project
             instructions_file = "avante.md",
             -- for example
-            provider = "ollama",
+            provider = "llama.cpp",
             providers = {
-                ollama = {
-                    endpoint = "http://aurolace:11434", -- Note that there is no /v1 at the end.
-                    model = "deepseek-r1:1.5b",
+                ["llama.cpp"]= {
+                    __inherited_from = 'openai',
+                    endpoint = "http://aurolace:8000/v1", -- Note that there is no /v1 at the end.
+                    api_key_name ="AUROLACE_API_KEY",
+                    model = "gpt-oss:20b",
                 },
             },
         },

@@ -5,7 +5,14 @@ return {
         dependencies = "neovim/nvim-lspconfig",
         event = "VeryLazy",
         opts = {
-            ["*"] = {}
+            ["*"] = {},
+            custom_servers ={
+                ["bluespec"] = {
+                    cmd = {"blues", "lsp"},
+                    filetypes = {"bsv", "bluespec"},
+                    root_dir = vim.fs.root(0,{".git"})
+                }
+            }
         },
     },
     -- highlight references

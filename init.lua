@@ -6,6 +6,7 @@ require("config.options")
 require("config.autocmds")
 require("config.keymaps")
 require("config.diagnostics")
+require("config.ftdetect")
 
 
 require("config.lazy")
